@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # flutter_clopg
 
 A new Flutter project.
@@ -16,3 +17,6 @@ For help getting started with Flutter, view our
 samples, guidance on mobile development, and a full API reference.
 
 樋野くん見てる？
+=======
+# CloPG
+>>>>>>> origin/main
