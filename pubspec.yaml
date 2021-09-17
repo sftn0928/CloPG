@@ -8,10 +8,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.2
   provider: ^5.0.0
   firebase_core: ^1.2.0
   cloud_firestore: ^2.2.0
+  cupertino_icons: ^1.0.3
+  english_words: ^4.0.0
+  adobe_xd: ^2.0.0+1
+  flutter_svg: ^0.21.0+1
+  flutter_launcher_icons: "^0.9.0"
 
 dev_dependencies:
   flutter_test:
