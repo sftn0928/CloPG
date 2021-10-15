@@ -4,9 +4,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 // フッター画面
 class footer_ui extends StatelessWidget {
-  footer_ui({
-    Key key,
-  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(

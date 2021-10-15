@@ -4,9 +4,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 // マイページ画面
 class my_page extends StatelessWidget {
-  my_page({
-    Key key,
-  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(

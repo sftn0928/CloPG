@@ -3,9 +3,6 @@ import 'package:adobe_xd/pinned.dart';
 
 // ゲーム一覧画面
 class game_index extends StatelessWidget {
-  game_index({
-    Key key,
-  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
