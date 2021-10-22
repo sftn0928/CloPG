@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_clopg/register_page.dart';
+import 'package:flutter_clopg/register/register_model.dart';
 import 'package:provider/provider.dart';
-import 'login_model.dart';
-import 'my_page.dart';
 
-class LoginPage extends StatelessWidget {
+class RegisterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<LoginModel>(
-      create: (_) => LoginModel(),
+    return ChangeNotifierProvider<RegisterModel>(
+      create: (_) => RegisterModel(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('ログイン'),
+          title: Text('新規登録'),
         ),
         body: Center(
-          child: Consumer<LoginModel>(builder: (context, model, child) {
+          child: Consumer<RegisterModel>(builder: (context, model, child) {
             return Stack(
               children: [
                 Padding(
@@ -51,15 +49,8 @@ class LoginPage extends StatelessWidget {
 
                           // 追加の処理
                           try {
-                            await model.login();
-                            // Navigator.of(context).pop();
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => my_page(),
-                                fullscreenDialog: true,
-                              ),
-                            );
+                            await model.signUp();
+                            Navigator.of(context).pop();
                           } catch (e) {
                             final snackBar = SnackBar(
                               backgroundColor: Colors.red,
@@ -71,20 +62,7 @@ class LoginPage extends StatelessWidget {
                             model.endLoading();
                           }
                         },
-                        child: Text('ログイン'),
-                      ),
-                      TextButton(
-                        onPressed: () async {
-                          // 画面遷移
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => RegisterPage(),
-                              fullscreenDialog: true,
-                            ),
-                          );
-                        },
-                        child: Text('新規登録の方はこちら'),
+                        child: Text('登録する'),
                       ),
                     ],
                   ),
