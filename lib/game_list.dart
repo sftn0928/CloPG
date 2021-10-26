@@ -1,91 +1,67 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:adobe_xd/pinned.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
-import 'game_choice.dart';
 
 // ゲーム一覧画面
-class GameList extends StatefulWidget {
-  @override
-  _GameList createState() => _GameList();
+
+//Storageに保存した画像のURLを取得する際のコード
+class NetworkImageBuilder extends FutureBuilder {
+  NetworkImageBuilder(Future<String> item)
+      : item = item,
+        super(
+        future: item,
+        builder: (context, snapshot) {
+          if(snapshot.hasData) {
+            return CachedNetworkImage(
+              imageUrl: snapshot.data,
+              placeholder: (context, url) => CircularProgressIndicator(),
+              errorWidget: (context, url, error) => Icon(Icons.error),
+            );
+          } else {
+            return CircularProgressIndicator();
+          }
+        },
+      );
+  final Future<String> item;
 }
 
-class _GameList extends State<GameList> {
-  List<String> gameTitle = [
-    'Apex',
-    'VALORANT',
-    'MONSTER HUNTER',
-  ];
-  List<String> gameDetail = [
-    'FPS',
-    'FPS',
-    'Action'
-  ];
+class GameList extends StatelessWidget {
+  final Stream<QuerySnapshot> _stream =
+      FirebaseFirestore.instance.collection('game_img').snapshots();
 
-  // final firestore = FirebaseFirestore.instance;
-  // final doc = await firestore
-  //     .collection("tests")
-  //     .doc("xxxxxxxxxxxxxxxx")
-  //     .get();
+  @override
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Game List'),
-      ),
-      body: ListView.builder(
-          itemCount: gameTitle.length,
-          itemBuilder: (context, index){
-            return Card(
-              child: ListTile(
-                leading: Container(
-                  width: 100,
-                  color: Colors.red,
-                ),
-                title: Text(gameTitle[index]),
-                subtitle: Text(gameDetail[index]),
-                trailing: Icon(Icons.more_vert),
-                onTap: (){
-                  print('onTap');
-                },
-              ),
-            );
-          }
-        // children: listTiles
-      ),
-    );
-  }
+        appBar: AppBar(
+          title: Text('Game List'),
+        ),
+        body: StreamBuilder<QuerySnapshot>(
+            stream: _stream,
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Text('Loading...');
+              }
+              return ListView(
+                children: snapshot.data!.docs.map((DocumentSnapshot document) {
+                  Map<String, dynamic> data =
+                      document.data()! as Map<String, dynamic>;
+                  return ListTile(
+                    leading:
+                        NetworkImageBuilder(FirebaseStorage.instance.ref(data['imgURL']).getDownloadURL()),
+                    title: Text(data['title']),
+                    subtitle: Text(data['category']),
+                    trailing: Icon(Icons.more_vert),
+                    onTap: () {
+                      print('onTap');
+                    },
+                  );
+                }).toList(),
+              );
+            }));
+  } // children:
+} // listTiles
 
-// static List<Widget> listTiles = <Widget>[
-//   ListTile(
-//     leading: Container(
-//       width: 100,
-//       color: Colors.red,
-//     ),
-//     title: Text('ゲームタイトル'),
-//     subtitle: Text('ジャンル'),
-//     // trailing: Icon(Icons.more_vert),
-//     trailing: Icon(
-//       alreadySaved ? Icons.favorite : Icons.favorite_border,
-//       color: alreadySaved ? Colors.red : null,
-//     ),
-//   ),
-//   ListTile(
-//     leading: Container(
-//       width: 100,
-//       color: Colors.blue,
-//     ),
-//     title: Text('ゲームタイトル'),
-//     subtitle: Text('ジャンル'),
-//     trailing: Icon(Icons.more_vert),
-//   ),
-//   ListTile(
-//     leading: Container(
-//       width: 100,
-//       color: Colors.green,
-//     ),
-//     title: Text('ゲームタイトル'),
-//     subtitle: Text('ジャンル'),
-//     trailing: Icon(Icons.more_vert),
-//   )
-// ];
-}
