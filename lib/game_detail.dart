@@ -3,10 +3,7 @@ import 'package:adobe_xd/pinned.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 // ゲーム詳細画面
-class game_detail extends StatelessWidget {
-  game_detail({
-    Key key,
-  }) : super(key: key);
+class GameDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
