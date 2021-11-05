@@ -17,7 +17,7 @@ class _App extends State<App> {
 
   static List<Widget> _pageList = [
     GameList(),
-    MyPage(),
+    // MyPage(),
     //GameChoice(),
   ];
 
