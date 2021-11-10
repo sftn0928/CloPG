@@ -20,7 +20,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
       // 各ファイルの名前を入力して実行すればそのページが表示される
-      home: GameDetail(),
+      // home: GameDetail(),
+      home: App(),
     );
   }
 }
