@@ -55,17 +55,17 @@ class GameList extends StatelessWidget {
                     title: Text(data['title']),
                     subtitle: Text(data['category']),
                     trailing: Icon(Icons.more_vert),
-                  //   trailing: new Checkbox(
-                  //   activeColor: Colors.blue,
-                  //   value: _check,
-                  //   onChanged: _handleCheckbox,
-                  // ),
+                    //   trailing: new Checkbox(
+                    //   activeColor: Colors.blue,
+                    //   value: _check,
+                    //   onChanged: _handleCheckbox,
+                    // ),
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => GameDetail(data['title'], data['category'], data['imgURL']
-                          ),
+                          builder: (context) => GameDetail(
+                              data['title'], data['category'], data['imgURL']),
                         ),
                       );
                     },

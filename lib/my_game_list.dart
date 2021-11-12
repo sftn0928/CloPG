@@ -11,25 +11,25 @@ class NetworkImageBuilder extends FutureBuilder {
   NetworkImageBuilder(Future<String> item)
       : item = item,
         super(
-        future: item,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return CachedNetworkImage(
-              imageUrl: snapshot.data,
-              placeholder: (context, url) => CircularProgressIndicator(),
-              errorWidget: (context, url, error) => Icon(Icons.error),
-            );
-          } else {
-            return CircularProgressIndicator();
-          }
-        },
-      );
+          future: item,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return CachedNetworkImage(
+                imageUrl: snapshot.data,
+                placeholder: (context, url) => CircularProgressIndicator(),
+                errorWidget: (context, url, error) => Icon(Icons.error),
+              );
+            } else {
+              return CircularProgressIndicator();
+            }
+          },
+        );
   final Future<String> item;
 }
 
 class MyGameList extends StatelessWidget {
   final Stream<QuerySnapshot> _stream =
-  FirebaseFirestore.instance.collection('user_game').snapshots();
+      FirebaseFirestore.instance.collection('user_game').snapshots();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,25 +43,30 @@ class MyGameList extends StatelessWidget {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Text('Loading...');
               }
+
               return ListView(
                 children: snapshot.data!.docs.map((DocumentSnapshot document) {
                   Map<String, dynamic> data =
-                  document.data()! as Map<String, dynamic>;
+                      document.data()! as Map<String, dynamic>;
                   return ListTile(
                     leading: NetworkImageBuilder(FirebaseStorage.instance
-                        .ref(data['user_game'])
+                        .ref(data['imgURL'])
                         .getDownloadURL()),
                     title: Text(data['title']),
-                    subtitle: Text(data['category']),
-                    // subtitle: Text(data['comment']),
-                    trailing: Icon(Icons.more_vert),
-                    // trailing: Text(data['playTime']),
+                    // subtitle: Text(data['category']),
+                    subtitle: Text("コメント：" + data['comment']),
+                    // trailing: Icon(Icons.more_vert),
+                    trailing: Text("プレイ時間：" + data['playTime'] + "h"),
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => MyGameDetail(data['title'], data['category'], data['imgURL'], data['playTime'], data['comment']
-                          ),
+                          builder: (context) => MyGameDetail(
+                              data['title'],
+                              data['category'],
+                              data['imgURL'],
+                              data['playTime'],
+                              data['comment']),
                         ),
                       );
                     },
