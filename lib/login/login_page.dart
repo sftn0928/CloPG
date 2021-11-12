@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_clopg/register/register_page.dart';
 import 'package:provider/provider.dart';
+import '../game_list.dart';
 import 'login_model.dart';
 import '../my_page.dart';
 
@@ -56,7 +57,8 @@ class LoginPage extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => MyPage(),
+                                // builder: (context) => MyPage(),
+                                builder: (context) => GameList(),
                                 fullscreenDialog: true,
                               ),
                             );
