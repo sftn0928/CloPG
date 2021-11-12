@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
+import 'package:flutter_clopg/game_detail.dart';
 
-import 'game_choice.dart';
+// import 'game_choice.dart';
 
 // ゲーム一覧画面
 class GameList extends StatefulWidget {
@@ -15,11 +16,7 @@ class _GameList extends State<GameList> {
     'VALORANT',
     'MONSTER HUNTER',
   ];
-  List<String> gameDetail = [
-    'FPS',
-    'FPS',
-    'Action'
-  ];
+  List<String> gameDetail = ['FPS', 'FPS', 'Action'];
 
   // final firestore = FirebaseFirestore.instance;
   // final doc = await firestore
@@ -34,7 +31,7 @@ class _GameList extends State<GameList> {
       ),
       body: ListView.builder(
           itemCount: gameTitle.length,
-          itemBuilder: (context, index){
+          itemBuilder: (context, index) {
             return Card(
               child: ListTile(
                 leading: Container(
@@ -44,14 +41,17 @@ class _GameList extends State<GameList> {
                 title: Text(gameTitle[index]),
                 subtitle: Text(gameDetail[index]),
                 trailing: Icon(Icons.more_vert),
-                onTap: (){
-                  print('onTap');
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => GameDetail()),
+                  );
                 },
               ),
             );
           }
-        // children: listTiles
-      ),
+          // children: listTiles
+          ),
     );
   }
 

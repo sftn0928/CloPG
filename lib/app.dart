@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
-import 'package:flutter_clopg/game_choice.dart';
+// import 'package:flutter_clopg/game_choice.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'game_list.dart';
@@ -18,7 +18,7 @@ class _App extends State<App> {
   static List<Widget> _pageList = [
     GameList(),
     MyPage(),
-    GameChoice(),
+    // GameChoice(),
   ];
 
   void _onItemTapped(int index) {
@@ -34,7 +34,6 @@ class _App extends State<App> {
 
     return Scaffold(
       body: _pageList[_selectedIndex],
-
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.shifting,
         backgroundColor: colorScheme.surface,
@@ -42,7 +41,6 @@ class _App extends State<App> {
         unselectedItemColor: colorScheme.onSurface.withOpacity(.60),
         selectedLabelStyle: textTheme.caption,
         unselectedLabelStyle: textTheme.caption,
-
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.list),
