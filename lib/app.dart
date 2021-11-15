@@ -16,7 +16,8 @@ class _App extends State<App> {
   // 各ボタンが押された際にコンテンツを表示する
   static List<Widget> _pageList = [
     GameList(),
-    MyPage(),
+    // MyPage(),
+    MyHomePage(),
     MyGameList(),
   ];
 
