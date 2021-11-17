@@ -47,6 +47,8 @@ class MyGameDetail extends StatelessWidget {
       backgroundColor: Colors.black87,
       appBar: AppBar(
         title: Text('My Game Detail'),
+        centerTitle: true,
+        elevation: 10,
       ),
       body: Card(
         // color: Color.fromRGBO(18, 25, 31, 1.0),
@@ -164,7 +166,7 @@ class MyGameDetail extends StatelessWidget {
       margin: EdgeInsets.all(16),
       child: Center(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(),
             ElevatedButton(
@@ -196,6 +198,9 @@ class MyGameDetail extends StatelessWidget {
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
                 },
+                style: ElevatedButton.styleFrom(primary: Colors.red,
+                  onPrimary: Colors.black,
+                ),
                 child: Text("削除"))
           ],
         ),
