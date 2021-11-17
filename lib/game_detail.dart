@@ -1,59 +1,79 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:adobe_xd/pinned.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'game_list.dart';
 
 // ゲーム詳細画面
-class GameDetail extends StatefulWidget {
-  @override
-  _GameDetail createState() => _GameDetail();
-}
+class GameDetail extends StatelessWidget {
+  // bool _check = false;
+  final String title;
+  final String category;
+  final String imgURL;
+  // final String playTime;
+  // final String comment;
 
-class _GameDetail extends State<GameDetail> {
-  bool _check = false;
+  // GameDetail(this.title, this.category, this.imgURL, this.playTime, this.comment);
+  GameDetail(this.title, this.category, this.imgURL);
 
-  void _handleCheckbox(bool? e){
-    setState(() {
-      _check = e!;
+  var _playTime = TextEditingController();
+  var _comment = TextEditingController();
+  // var _inputTextController = TextEditingController();
+
+  // void _handleCheckbox(bool? e){
+  //   setState(() {
+  //     _check = e!;
+  //   });
+  // }
+
+  Future AddUser() async {
+    if (_playTime.text == null || _playTime.text == "") {
+      throw 'プレイ時間が入力されていません';
+    }
+
+    if (_comment.text == null || _comment.text == "") {
+      throw 'コメントが入力されていません';
+    }
+
+    // firestoreに追加
+    await FirebaseFirestore.instance.collection('user_game').add({
+      'title': title,
+      'category': category,
+      'imgURL': imgURL,
+      'playTime': _playTime.text,
+      'comment': _comment.text,
     });
   }
 
+  @override
   Widget build(BuildContext context) {
-    // // 画像を指定するリスト
-    // var list = [
-    //   _photoItem("image")
-    // ];
-
-    return Scaffold(
-      backgroundColor: Colors.black87,
-      appBar: AppBar(
-        title: Text('Game Detail'),
-      ),
-      body: Card(
-        // color: Color.fromRGBO(18, 25, 31, 1.0),
-        elevation: 4,
-        margin: const EdgeInsets.all(10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            // 作業フォルダにimagesフォルダを作成し、その中にsample.jpgという名前の画像を入れて表示
-            Image.asset('images/sample.jpg'),
-            _titleArea(),
-            _playCountInputArea(),
-            _detailInputArea()
-          ]
-        ),
-      ),
-    );
-  }
-
-  // // 指定した名前の画像を表示する
-  // Widget _photoItem(String image){
-  //   var assetImage = "assets/img/" + image + ".png";
-  //   return Container(
-  //     child: Image.asset(assetsImage, fit: BoxFit.cover,),
-  //   );
-  // }
+        return Scaffold(
+          backgroundColor: Colors.black87,
+          appBar: AppBar(
+            title: Text('Game Detail'),
+          ),
+          body: Card(
+                // color: Color.fromRGBO(18, 25, 31, 1.0),
+                elevation: 4,
+                margin: const EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    // 作業フォルダにimagesフォルダを作成し、その中にsample.jpgという名前の画像を入れて表示
+                    // Image.asset('images/sample.jpg'),
+                    NetworkImageBuilder(FirebaseStorage.instance
+                        .ref(imgURL)
+                        .getDownloadURL()),
+                    _titleArea(),
+                    _playCountInputArea(),
+                    _detailInputArea(),
+                    // _valueArea(),
+                    _determineArea(context)
+                  ]
+                ),
+              ),
+          );
+      }
 
   Widget _titleArea(){
     return Container(
@@ -67,25 +87,25 @@ class _GameDetail extends State<GameDetail> {
                 Container(
                   margin: const EdgeInsets.only(bottom: 4),
                   child: Text(
-                    "Apex Legends",
+                    title,
                     style: TextStyle(
                         fontWeight: FontWeight.bold, fontSize: 23),
                   ),
                 ),
                 Container(
                   child: Text(
-                    "FPS",
+                    category,
                     style: TextStyle(fontSize: 18, color: Colors.grey),
                   ),
                 )
               ],
             ),
           ),
-          new Checkbox(
-            activeColor: Colors.blue,
-            value: _check,
-            onChanged: _handleCheckbox,
-          ),
+          // new Checkbox(
+          //   activeColor: Colors.blue,
+          //   value: _check,
+          //   onChanged: _handleCheckbox,
+          // ),
         ],
       )
     );
@@ -101,9 +121,9 @@ class _GameDetail extends State<GameDetail> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
-                    margin: const EdgeInsets.only(bottom: 4),
+                    // margin: const EdgeInsets.only(bottom: 0),
                     child: Text(
-                      "プレイ時間",
+                      "プレイ時間（○○時間）",
                       style: TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 16
                       ),
@@ -112,12 +132,15 @@ class _GameDetail extends State<GameDetail> {
                   TextField(
                     keyboardType: TextInputType.number,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    decoration: InputDecoration(
+                      // border: OutlineInputBorder(),
+                      hintText: '例）100',
+                    ),
+                    controller: _playTime,
                   ),
                 ],
               )
-
           ),
-          ElevatedButton(onPressed: (){}, child: Text("確定"))
         ],
       ),
     );
@@ -133,22 +156,61 @@ class _GameDetail extends State<GameDetail> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    margin: const EdgeInsets.only(bottom: 4.0),
+                    // margin: const EdgeInsets.only(bottom: 0),
                     child: Text(
                       "メモ",
                       style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 16
+                          fontWeight: FontWeight.bold, fontSize: 16
                       ),
                     ),
                   ),
-                  TextField()
+                  TextField(
+                    decoration: InputDecoration(
+                      // border: OutlineInputBorder(),
+                      hintText: '例）めっちゃおもしろい！！',
+                    ),
+                    controller: _comment,
+                  )
                 ],
               )
           ),
-          ElevatedButton(onPressed: (){}, child: Text("確定"))
         ],
       ),
     );
   }
-}
 
+  // Widget _valueArea(){
+  //
+  // }
+
+
+  Widget _determineArea(context){
+    return Container(
+      margin: EdgeInsets.all(16),
+      child: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+            ),
+            ElevatedButton(
+                onPressed: () async {
+                  // 追加の処理
+                  try {
+                    await AddUser();
+                    Navigator.pop(context);
+                  } catch (e) {
+                    final snackBar = SnackBar(
+                      backgroundColor: Colors.red,
+                      content: Text(e.toString()),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  }
+                },
+                child: Text("確定"))
+          ],
+        ),
+      ),
+    );
+  }
+}

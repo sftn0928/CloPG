@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 //import 'package:adobe_xd/pinned.dart';
-//import 'package:flutter_clopg/game_choice.dart';
+//import 'package:flutter_clopg/my_game_list.dart';
 //import 'package:flutter_svg/flutter_svg.dart';
-
-import 'game_choice.dart';
+import 'my_game_list.dart';
 import 'game_list.dart';
 import 'my_page.dart';
 
@@ -20,7 +19,7 @@ class _App extends State<App> {
   static List<Widget> _pageList = [
     GameList(),
     MyPage(),
-    GameChoice(),
+    MyGameList(),
   ];
 
   void _onItemTapped(int index) {
