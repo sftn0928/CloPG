@@ -47,6 +47,8 @@ class MyGameDetail extends StatelessWidget {
       backgroundColor: Colors.black87,
       appBar: AppBar(
         title: Text('My Game Detail'),
+        centerTitle: true,
+        elevation: 10,
       ),
       body: Card(
         // color: Color.fromRGBO(18, 25, 31, 1.0),
@@ -166,16 +168,11 @@ class MyGameDetail extends StatelessWidget {
       margin: EdgeInsets.all(16),
       child: Center(
         child: Row(
-          //crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Container(),
             ElevatedButton(
                 child: Text("変更確定"),
-              style: ElevatedButton.styleFrom(
-                primary: Colors.blue,
-                onPrimary: Colors.black,
-              ),
                 onPressed: () async {
                   // 追加の処理
                   try {
@@ -192,10 +189,6 @@ class MyGameDetail extends StatelessWidget {
             ),
             ElevatedButton(
                 child: Text("削除"),
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.red,
-                  onPrimary: Colors.black,
-                ),
                 onPressed: () async {
                   // 追加の処理
                   try {

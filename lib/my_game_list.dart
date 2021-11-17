@@ -92,6 +92,8 @@ class MyGameList extends StatelessWidget {
         child: Scaffold(
         appBar: AppBar(
           title: Text('MY Game List'),
+          centerTitle: true,
+          elevation: 10,
           actions: [
             IconButton(
               icon: Icon(Icons.share),

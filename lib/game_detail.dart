@@ -51,9 +51,10 @@ class GameDetail extends StatelessWidget {
       backgroundColor: Colors.black87,
       appBar: AppBar(
         title: Text('Game Detail'),
+        centerTitle: true,
+        elevation: 10,
       ),
       body: Card(
-        // color: Color.fromRGBO(18, 25, 31, 1.0),
         elevation: 4,
         margin: const EdgeInsets.all(10),
         child: SingleChildScrollView(
@@ -101,11 +102,6 @@ class GameDetail extends StatelessWidget {
                 ],
               ),
             ),
-            // new Checkbox(
-            //   activeColor: Colors.blue,
-            //   value: _check,
-            //   onChanged: _handleCheckbox,
-            // ),
           ],
         ));
   }
@@ -149,24 +145,25 @@ class GameDetail extends StatelessWidget {
         children: [
           Expanded(
               child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                // margin: const EdgeInsets.only(bottom: 0),
-                child: Text(
-                  "コメント",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                ),
-              ),
-              TextField(
-                decoration: InputDecoration(
-                  // border: OutlineInputBorder(),
-                  hintText: '例）めっちゃおもしろい！！',
-                ),
-                controller: _comment,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    // margin: const EdgeInsets.only(bottom: 0),
+                    child: Text(
+                      "コメント",
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                  ),
+                  TextField(
+                    decoration: InputDecoration(
+                      // border: OutlineInputBorder(),
+                      hintText: '例）めっちゃおもしろい！！',
+                    ),
+                    controller: _comment,
+                  )
+                ],
               )
-            ],
-          )),
+          ),
         ],
       ),
     );
@@ -181,7 +178,7 @@ class GameDetail extends StatelessWidget {
       margin: EdgeInsets.all(16),
       child: Center(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             //Container(),
             ElevatedButton(
