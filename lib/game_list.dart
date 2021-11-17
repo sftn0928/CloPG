@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
+import 'game_detail.dart';
 
 // ゲーム一覧画面
 
@@ -11,19 +12,19 @@ class NetworkImageBuilder extends FutureBuilder {
   NetworkImageBuilder(Future<String> item)
       : item = item,
         super(
-        future: item,
-        builder: (context, snapshot) {
-          if(snapshot.hasData) {
-            return CachedNetworkImage(
-              imageUrl: snapshot.data,
-              placeholder: (context, url) => CircularProgressIndicator(),
-              errorWidget: (context, url, error) => Icon(Icons.error),
-            );
-          } else {
-            return CircularProgressIndicator();
-          }
-        },
-      );
+          future: item,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return CachedNetworkImage(
+                imageUrl: snapshot.data,
+                placeholder: (context, url) => CircularProgressIndicator(),
+                errorWidget: (context, url, error) => Icon(Icons.error),
+              );
+            } else {
+              return CircularProgressIndicator();
+            }
+          },
+        );
   final Future<String> item;
 }
 
@@ -48,13 +49,25 @@ class GameList extends StatelessWidget {
                   Map<String, dynamic> data =
                       document.data()! as Map<String, dynamic>;
                   return ListTile(
-                    leading:
-                        NetworkImageBuilder(FirebaseStorage.instance.ref(data['imgURL']).getDownloadURL()),
+                    leading: NetworkImageBuilder(FirebaseStorage.instance
+                        .ref(data['imgURL'])
+                        .getDownloadURL()),
                     title: Text(data['title']),
                     subtitle: Text(data['category']),
                     trailing: Icon(Icons.more_vert),
+                    //   trailing: new Checkbox(
+                    //   activeColor: Colors.blue,
+                    //   value: _check,
+                    //   onChanged: _handleCheckbox,
+                    // ),
                     onTap: () {
-                      print('onTap');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => GameDetail(
+                              data['title'], data['category'], data['imgURL']),
+                        ),
+                      );
                     },
                   );
                 }).toList(),
@@ -62,4 +75,3 @@ class GameList extends StatelessWidget {
             }));
   } // children:
 } // listTiles
-
