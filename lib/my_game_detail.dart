@@ -12,7 +12,8 @@ class MyGameDetail extends StatelessWidget {
   final String playTime;
   final String comment;
 
-  MyGameDetail(this.title, this.category, this.imgURL, this.playTime, this.comment);
+  MyGameDetail(
+      this.title, this.category, this.imgURL, this.playTime, this.comment);
 
   var _playTime = TextEditingController();
   var _comment = TextEditingController();
@@ -26,7 +27,7 @@ class MyGameDetail extends StatelessWidget {
   //   if (_comment.text == null || _comment.text == "") {
   //     throw 'コメントが入力されていません';
   //   }
-  //   await FirebaseFirestore.instance.collection('user_game').doc(uid).update({
+  //   await FirebaseFirestore.instance.collection('user_game').doc(docRef).update({
   //     'title': title,
   //     'category': category,
   //     'imgURL': imgURL,
@@ -34,7 +35,7 @@ class MyGameDetail extends StatelessWidget {
   //     'comment': _comment.text,
   //   });
   // }
-  //
+
   // // データの削除
   // Future DeleteUser() async {
   //   await FirebaseFirestore.instance.collection('user_game').doc(.id).delete();
@@ -51,23 +52,23 @@ class MyGameDetail extends StatelessWidget {
         // color: Color.fromRGBO(18, 25, 31, 1.0),
         elevation: 4,
         margin: const EdgeInsets.all(10),
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              NetworkImageBuilder(FirebaseStorage.instance
-                  .ref(imgURL)
-                  .getDownloadURL()),
-              _titleArea(),
-              _playCountInputArea(),
-              _detailInputArea(),
-              _determineArea(context)
-            ]
+        child: SingleChildScrollView(
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                NetworkImageBuilder(
+                    FirebaseStorage.instance.ref(imgURL).getDownloadURL()),
+                _titleArea(),
+                _playCountInputArea(),
+                _detailInputArea(),
+                _determineArea(context)
+              ]),
         ),
       ),
     );
   }
 
-  Widget _titleArea(){
+  Widget _titleArea() {
     return Container(
         margin: EdgeInsets.all(16),
         child: Row(
@@ -80,8 +81,8 @@ class MyGameDetail extends StatelessWidget {
                     margin: const EdgeInsets.only(bottom: 4),
                     child: Text(
                       title,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 23),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
                     ),
                   ),
                   Container(
@@ -94,70 +95,63 @@ class MyGameDetail extends StatelessWidget {
               ),
             ),
           ],
-        )
-    );
+        ));
   }
 
-  Widget _playCountInputArea(){
+  Widget _playCountInputArea() {
     return Container(
       margin: EdgeInsets.all(16),
       child: Row(
         children: <Widget>[
           Expanded(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    child: Text(
-                      "プレイ時間（○○時間）",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 16
-                      ),
-                    ),
-                  ),
-                  TextField(
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    decoration: InputDecoration(
-                      hintText: playTime,
-                    ),
-                    controller: _playTime,
-                  ),
-                ],
-              )
-          ),
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                child: Text(
+                  "プレイ時間（○○時間）",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+              ),
+              TextField(
+                keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                decoration: InputDecoration(
+                  hintText: playTime,
+                ),
+                controller: _playTime,
+              ),
+            ],
+          )),
         ],
       ),
     );
   }
 
-  Widget _detailInputArea(){
+  Widget _detailInputArea() {
     return Container(
       margin: EdgeInsets.all(16),
       child: Row(
         children: [
           Expanded(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    // margin: const EdgeInsets.only(bottom: 0),
-                    child: Text(
-                      "メモ",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 16
-                      ),
-                    ),
-                  ),
-                  TextField(
-                    decoration: InputDecoration(
-                      hintText: comment,
-                    ),
-                    controller: _comment,
-                  )
-                ],
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                // margin: const EdgeInsets.only(bottom: 0),
+                child: Text(
+                  "メモ",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+              ),
+              TextField(
+                decoration: InputDecoration(
+                  hintText: comment,
+                ),
+                controller: _comment,
               )
-          ),
+            ],
+          )),
         ],
       ),
     );
@@ -167,17 +161,21 @@ class MyGameDetail extends StatelessWidget {
   //
   // }
 
-
-  Widget _determineArea(context){
+  Widget _determineArea(context) {
     return Container(
       margin: EdgeInsets.all(16),
       child: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Row(
+          //crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Container(
-            ),
+            Container(),
             ElevatedButton(
+                child: Text("変更確定"),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.blue,
+                onPrimary: Colors.black,
+              ),
                 onPressed: () async {
                   // 追加の処理
                   try {
@@ -191,8 +189,13 @@ class MyGameDetail extends StatelessWidget {
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
                 },
-                child: Text("変更確定")),
+            ),
             ElevatedButton(
+                child: Text("削除"),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.red,
+                  onPrimary: Colors.black,
+                ),
                 onPressed: () async {
                   // 追加の処理
                   try {
@@ -206,7 +209,7 @@ class MyGameDetail extends StatelessWidget {
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
                 },
-                child: Text("削除"))
+            )
           ],
         ),
       ),

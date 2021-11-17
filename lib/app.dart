@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-//import 'package:adobe_xd/pinned.dart';
-//import 'package:flutter_clopg/my_game_list.dart';
-//import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_clopg/my_game_list.dart';
+import 'package:flutter_clopg/my_game_list.dart';
 import 'my_game_list.dart';
 import 'game_list.dart';
 import 'my_page.dart';
@@ -18,7 +17,8 @@ class _App extends State<App> {
   // 各ボタンが押された際にコンテンツを表示する
   static List<Widget> _pageList = [
     GameList(),
-    MyPage(),
+    // MyPage(),
+    MyHomePage(),
     MyGameList(),
   ];
 
@@ -35,7 +35,6 @@ class _App extends State<App> {
 
     return Scaffold(
       body: _pageList[_selectedIndex],
-
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         backgroundColor: colorScheme.surface,
@@ -43,7 +42,6 @@ class _App extends State<App> {
         unselectedItemColor: colorScheme.onSurface.withOpacity(.60),
         selectedLabelStyle: textTheme.caption,
         unselectedLabelStyle: textTheme.caption,
-
         // フッターのボタンを追加する
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(

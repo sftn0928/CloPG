@@ -21,10 +21,10 @@ class GameDetail extends StatelessWidget {
   // var _inputTextController = TextEditingController();
 
   // void _handleCheckbox(bool? e){
-  //   setState(() {
-  //     _check = e!;
-  //   });
-  // }
+  //   //   setState(() {
+  //   //     _check = e!;
+  //   //   });
+  //   // }
 
   Future AddUser() async {
     if (_playTime.text == null || _playTime.text == "") {
@@ -47,133 +47,126 @@ class GameDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-        return Scaffold(
-          backgroundColor: Colors.black87,
-          appBar: AppBar(
-            title: Text('Game Detail'),
-          ),
-          body: Card(
-                // color: Color.fromRGBO(18, 25, 31, 1.0),
-                elevation: 4,
-                margin: const EdgeInsets.all(10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    // 作業フォルダにimagesフォルダを作成し、その中にsample.jpgという名前の画像を入れて表示
-                    // Image.asset('images/sample.jpg'),
-                    NetworkImageBuilder(FirebaseStorage.instance
-                        .ref(imgURL)
-                        .getDownloadURL()),
-                    _titleArea(),
-                    _playCountInputArea(),
-                    _detailInputArea(),
-                    // _valueArea(),
-                    _determineArea(context)
-                  ]
-                ),
-              ),
-          );
-      }
-
-  Widget _titleArea(){
-    return Container(
-      margin: EdgeInsets.all(16),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+    return Scaffold(
+      backgroundColor: Colors.black87,
+      appBar: AppBar(
+        title: Text('Game Detail'),
+      ),
+      body: Card(
+        // color: Color.fromRGBO(18, 25, 31, 1.0),
+        elevation: 4,
+        margin: const EdgeInsets.all(10),
+        child: SingleChildScrollView(
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Container(
-                  margin: const EdgeInsets.only(bottom: 4),
-                  child: Text(
-                    title,
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 23),
-                  ),
-                ),
-                Container(
-                  child: Text(
-                    category,
-                    style: TextStyle(fontSize: 18, color: Colors.grey),
-                  ),
-                )
-              ],
-            ),
-          ),
-          // new Checkbox(
-          //   activeColor: Colors.blue,
-          //   value: _check,
-          //   onChanged: _handleCheckbox,
-          // ),
-        ],
-      )
+                // 作業フォルダにimagesフォルダを作成し、その中にsample.jpgという名前の画像を入れて表示
+                // Image.asset('images/sample.jpg'),
+                NetworkImageBuilder(
+                    FirebaseStorage.instance.ref(imgURL).getDownloadURL()),
+                _titleArea(),
+                _playCountInputArea(),
+                _detailInputArea(),
+                // _valueArea(),
+                _determineArea(context)
+              ]),
+        ),
+      ),
     );
   }
 
-  Widget _playCountInputArea(){
+  Widget _titleArea() {
+    return Container(
+        margin: EdgeInsets.all(16),
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 4),
+                    child: Text(
+                      title,
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
+                    ),
+                  ),
+                  Container(
+                    child: Text(
+                      category,
+                      style: TextStyle(fontSize: 18, color: Colors.grey),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            // new Checkbox(
+            //   activeColor: Colors.blue,
+            //   value: _check,
+            //   onChanged: _handleCheckbox,
+            // ),
+          ],
+        ));
+  }
+
+  Widget _playCountInputArea() {
     return Container(
       margin: EdgeInsets.all(16),
       child: Row(
         children: <Widget>[
           Expanded(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    // margin: const EdgeInsets.only(bottom: 0),
-                    child: Text(
-                      "プレイ時間（○○時間）",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 16
-                      ),
-                    ),
-                  ),
-                  TextField(
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    decoration: InputDecoration(
-                      // border: OutlineInputBorder(),
-                      hintText: '例）100',
-                    ),
-                    controller: _playTime,
-                  ),
-                ],
-              )
-          ),
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                // margin: const EdgeInsets.only(bottom: 0),
+                child: Text(
+                  "プレイ時間（○○時間）",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+              ),
+              TextField(
+                keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                decoration: InputDecoration(
+                  // border: OutlineInputBorder(),
+                  hintText: '例）100',
+                ),
+                controller: _playTime,
+              ),
+            ],
+          )),
         ],
       ),
     );
   }
 
-  Widget _detailInputArea(){
+  Widget _detailInputArea() {
     return Container(
       margin: EdgeInsets.all(16),
       child: Row(
         children: [
           Expanded(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    // margin: const EdgeInsets.only(bottom: 0),
-                    child: Text(
-                      "メモ",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 16
-                      ),
-                    ),
-                  ),
-                  TextField(
-                    decoration: InputDecoration(
-                      // border: OutlineInputBorder(),
-                      hintText: '例）めっちゃおもしろい！！',
-                    ),
-                    controller: _comment,
-                  )
-                ],
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                // margin: const EdgeInsets.only(bottom: 0),
+                child: Text(
+                  "コメント",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+              ),
+              TextField(
+                decoration: InputDecoration(
+                  // border: OutlineInputBorder(),
+                  hintText: '例）めっちゃおもしろい！！',
+                ),
+                controller: _comment,
               )
-          ),
+            ],
+          )),
         ],
       ),
     );
@@ -183,16 +176,14 @@ class GameDetail extends StatelessWidget {
   //
   // }
 
-
-  Widget _determineArea(context){
+  Widget _determineArea(context) {
     return Container(
       margin: EdgeInsets.all(16),
       child: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-            ),
+            //Container(),
             ElevatedButton(
                 onPressed: () async {
                   // 追加の処理
