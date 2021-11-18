@@ -18,28 +18,51 @@ class MyGameDetail extends StatelessWidget {
   var _playTime = TextEditingController();
   var _comment = TextEditingController();
 
-  // // データの更新
-  // Future UpdateUser() async {
-  //   if (_playTime.text == null || _playTime.text == "") {
-  //     throw 'プレイ時間が入力されていません';
-  //   }
-  //
-  //   if (_comment.text == null || _comment.text == "") {
-  //     throw 'コメントが入力されていません';
-  //   }
-  //   await FirebaseFirestore.instance.collection('user_game').doc(uid).update({
-  //     'title': title,
-  //     'category': category,
-  //     'imgURL': imgURL,
-  //     'playTime': _playTime.text,
-  //     'comment': _comment.text,
-  //   });
+  // Future getDocId(Title, col_name) async {
+  //   return FirebaseFirestore.instance.collection('user_game').where('title', isEqualTo: Title).get();
   // }
-  //
-  // // データの削除
-  // Future DeleteUser() async {
-  //   await FirebaseFirestore.instance.collection('user_game').doc(.id).delete();
+
+  // Future<String> getDocId() async {
+  //   List docList = [];
+  //   await FirebaseFirestore.instance.collection('user_game').where("title", isEqualTo: title).get().then(
+  //         (QuerySnapshot querySnapshot) => {
+  //       querySnapshot.docs.forEach(
+  //             (doc) {
+  //           docList.add(doc.id);
+  //         },
+  //       ),
+  //     },
+  //   );
+  //   print("zzzzzzzzz");
+  //   return docList[0];
   // }
+
+  // データの更新
+  Future UpdateUser() async {
+    if (_playTime.text == null || _playTime.text == "") {
+      throw 'プレイ時間が入力されていません';
+    }
+
+    if (_comment.text == null || _comment.text == "") {
+      throw 'コメントが入力されていません';
+    }
+    // String t = getDocId(title,'user_game') as String;
+    await FirebaseFirestore.instance.collection('user_game').doc(title).update({
+      'title': title,
+      'category': category,
+      'imgURL': imgURL,
+      'playTime': _playTime.text,
+      'comment': _comment.text,
+    });
+  }
+
+  // データの削除
+  Future DeleteUser() async {
+    await FirebaseFirestore.instance.collection('user_game').doc(title).delete();
+    await FirebaseFirestore.instance.collection('game_img').doc(title).update({
+          'check': false,
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -155,10 +178,6 @@ class MyGameDetail extends StatelessWidget {
     );
   }
 
-  // Widget _valueArea(){
-  //
-  // }
-
   Widget _determineArea(context) {
     return Container(
       margin: EdgeInsets.all(16),
@@ -171,7 +190,7 @@ class MyGameDetail extends StatelessWidget {
                 onPressed: () async {
                   // 追加の処理
                   try {
-                    // await UpdateUser();
+                    await UpdateUser();
                     Navigator.pop(context);
                   } catch (e) {
                     final snackBar = SnackBar(
@@ -186,7 +205,7 @@ class MyGameDetail extends StatelessWidget {
                 onPressed: () async {
                   // 追加の処理
                   try {
-                    // await DeleteUser();
+                    await DeleteUser();
                     Navigator.pop(context);
                   } catch (e) {
                     final snackBar = SnackBar(
