@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: materialWhite,
@@ -44,7 +45,7 @@ class MyApp extends StatelessWidget {
       ),
       // 各ファイルの名前を入力して実行すればそのページが表示される
       // home: GameDetail(),
-      home: App(),
+      home: LoginPage(),
     );
   }
 }

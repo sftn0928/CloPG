@@ -35,9 +35,6 @@ class GameList extends StatefulWidget {
 
 class _GameList extends State<GameList> {
   void _handleCheckbox(bool? e){
-    // setState(() {
-    //   _check = _check;
-    // });
   }
 
   final Stream<QuerySnapshot> _stream =
