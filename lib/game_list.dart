@@ -34,11 +34,10 @@ class GameList extends StatefulWidget {
 }
 
 class _GameList extends State<GameList> {
-  bool _check = false;
   void _handleCheckbox(bool? e){
-    setState(() {
-      _check = !_check;
-    });
+    // setState(() {
+    //   _check = _check;
+    // });
   }
 
   final Stream<QuerySnapshot> _stream =
@@ -68,11 +67,11 @@ class _GameList extends State<GameList> {
                     subtitle: Text(data['category']),
                     trailing: new Checkbox(
                       activeColor: Colors.blue,
-                      value: _check,
+                      value: (data['check']),
                       onChanged: _handleCheckbox,
                     ),
                     onTap: () {
-                      Navigator.push(
+                      if(!(data['check']))Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => GameDetail(
