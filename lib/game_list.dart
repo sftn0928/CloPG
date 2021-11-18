@@ -47,6 +47,8 @@ class _GameList extends State<GameList> {
     return Scaffold(
         appBar: AppBar(
           title: Text('Game List'),
+          centerTitle: true,
+          elevation: 10,
         ),
         body: StreamBuilder<QuerySnapshot>(
             stream: _stream,

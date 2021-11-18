@@ -45,6 +45,8 @@ class GameDetail extends StatelessWidget {
       backgroundColor: Colors.black87,
       appBar: AppBar(
         title: Text('Game Detail'),
+        centerTitle: true,
+        elevation: 10,
       ),
       body: Card(
         elevation: 4,
@@ -145,17 +147,19 @@ class GameDetail extends StatelessWidget {
                 controller: _comment,
               )
             ],
-          )),
+              )
+          ),
         ],
       ),
     );
   }
+
   Widget _determineArea(context) {
     return Container(
       margin: EdgeInsets.all(16),
       child: Center(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(),
             ElevatedButton(
