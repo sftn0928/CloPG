@@ -30,12 +30,12 @@ class GameDetail extends StatelessWidget {
       'title': title,
       'category': category,
       'imgURL': imgURL,
-      'playTime': _playTime.text,
+      'playTime': int.parse(_playTime.text),
       'comment': _comment.text,
     });
 
     await FirebaseFirestore.instance.collection('game_img').doc(title).update({
-          'check': true,
+      'check': true,
     });
   }
 
@@ -51,16 +51,18 @@ class GameDetail extends StatelessWidget {
       body: Card(
         elevation: 4,
         margin: const EdgeInsets.all(10),
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              NetworkImageBuilder(
-                  FirebaseStorage.instance.ref(imgURL).getDownloadURL()),
-              _titleArea(),
-              _playCountInputArea(),
-              _detailInputArea(),
-              _determineArea(context)
-            ]),
+        child: SingleChildScrollView(
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                NetworkImageBuilder(
+                    FirebaseStorage.instance.ref(imgURL).getDownloadURL()),
+                _titleArea(),
+                _playCountInputArea(),
+                _detailInputArea(),
+                _determineArea(context)
+              ]),
+        ),
       ),
     );
   }
@@ -147,8 +149,7 @@ class GameDetail extends StatelessWidget {
                 controller: _comment,
               )
             ],
-              )
-          ),
+          )),
         ],
       ),
     );

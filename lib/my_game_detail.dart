@@ -9,7 +9,7 @@ class MyGameDetail extends StatelessWidget {
   final String title;
   final String category;
   final String imgURL;
-  final String playTime;
+  final int playTime;
   final String comment;
 
   MyGameDetail(
@@ -17,25 +17,6 @@ class MyGameDetail extends StatelessWidget {
 
   var _playTime = TextEditingController();
   var _comment = TextEditingController();
-
-  // Future getDocId(Title, col_name) async {
-  //   return FirebaseFirestore.instance.collection('user_game').where('title', isEqualTo: Title).get();
-  // }
-
-  // Future<String> getDocId() async {
-  //   List docList = [];
-  //   await FirebaseFirestore.instance.collection('user_game').where("title", isEqualTo: title).get().then(
-  //         (QuerySnapshot querySnapshot) => {
-  //       querySnapshot.docs.forEach(
-  //             (doc) {
-  //           docList.add(doc.id);
-  //         },
-  //       ),
-  //     },
-  //   );
-  //   print("zzzzzzzzz");
-  //   return docList[0];
-  // }
 
   // データの更新
   Future UpdateUser() async {
@@ -51,16 +32,19 @@ class MyGameDetail extends StatelessWidget {
       'title': title,
       'category': category,
       'imgURL': imgURL,
-      'playTime': _playTime.text,
+      'playTime': int.parse(_playTime.text),
       'comment': _comment.text,
     });
   }
 
   // データの削除
   Future DeleteUser() async {
-    await FirebaseFirestore.instance.collection('user_game').doc(title).delete();
+    await FirebaseFirestore.instance
+        .collection('user_game')
+        .doc(title)
+        .delete();
     await FirebaseFirestore.instance.collection('game_img').doc(title).update({
-          'check': false,
+      'check': false,
     });
   }
 
@@ -77,16 +61,18 @@ class MyGameDetail extends StatelessWidget {
         // color: Color.fromRGBO(18, 25, 31, 1.0),
         elevation: 4,
         margin: const EdgeInsets.all(10),
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              NetworkImageBuilder(
-                  FirebaseStorage.instance.ref(imgURL).getDownloadURL()),
-              _titleArea(),
-              _playCountInputArea(),
-              _detailInputArea(),
-              _determineArea(context)
-            ]),
+        child: SingleChildScrollView(
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                NetworkImageBuilder(
+                    FirebaseStorage.instance.ref(imgURL).getDownloadURL()),
+                _titleArea(),
+                _playCountInputArea(),
+                _detailInputArea(),
+                _determineArea(context)
+              ]),
+        ),
       ),
     );
   }
@@ -140,7 +126,7 @@ class MyGameDetail extends StatelessWidget {
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 decoration: InputDecoration(
-                  hintText: playTime,
+                  hintText: playTime.toString(),
                 ),
                 controller: _playTime,
               ),
@@ -217,7 +203,8 @@ class MyGameDetail extends StatelessWidget {
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
                 },
-                style: ElevatedButton.styleFrom(primary: Colors.red,
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.red,
                   onPrimary: Colors.black,
                 ),
                 child: Text("削除"))

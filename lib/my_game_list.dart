@@ -1,5 +1,3 @@
-// import 'dart:html';
-// import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -36,13 +34,12 @@ class NetworkImageBuilder extends FutureBuilder {
 }
 
 class MyGameList extends StatelessWidget {
-
 //  共有機能
   final GlobalKey shareKey = GlobalKey();
 
   Future<ByteData?> exportToImage(GlobalKey globalKey) async {
     final boundary =
-    globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+        globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
     final image = await boundary.toImage(
       pixelRatio: 3,
     );
@@ -70,10 +67,10 @@ class MyGameList extends StatelessWidget {
       //byte dataに
       final bytes = await exportToImage(globalKey);
       final widgetImageData =
-      bytes?.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
+          bytes?.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
       //App directoryファイルに保存
       final applicationDocumentsFile =
-      await getApplicationDocumentsFile(text, widgetImageData!);
+          await getApplicationDocumentsFile(text, widgetImageData!);
 
       final path = applicationDocumentsFile.path;
       await ShareExtend.share(path, "image");
@@ -90,57 +87,58 @@ class MyGameList extends StatelessWidget {
     return RepaintBoundary(
         key: shareKey,
         child: Scaffold(
-        appBar: AppBar(
-          title: Text('MY Game List'),
-          centerTitle: true,
-          elevation: 10,
-          actions: [
-            IconButton(
-              icon: Icon(Icons.share),
-              onPressed: () => shareImageAndText(
-                'sample_widget',
-                shareKey,
-              )
+            appBar: AppBar(
+              title: Text('MY Game List'),
+              centerTitle: true,
+              elevation: 10,
+              actions: [
+                IconButton(
+                    icon: Icon(Icons.share),
+                    onPressed: () => shareImageAndText(
+                          'sample_widget',
+                          shareKey,
+                        )),
+              ],
             ),
-          ],
-        ),
-        body: StreamBuilder<QuerySnapshot>(
-            stream: _stream,
-            builder:
-                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Text('Loading...');
-              }
+            body: StreamBuilder<QuerySnapshot>(
+                stream: _stream,
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Text('Loading...');
+                  }
 
-              return ListView(
-                children: snapshot.data!.docs.map((DocumentSnapshot document) {
-                  Map<String, dynamic> data =
-                      document.data()! as Map<String, dynamic>;
-                  return ListTile(
-                    leading: NetworkImageBuilder(FirebaseStorage.instance
-                        .ref(data['imgURL'])
-                        .getDownloadURL()),
-                    title: Text(data['title']),
-                    // subtitle: Text(data['category']),
-                    subtitle: Text("コメント：" + data['comment']),
-                    // trailing: Icon(Icons.more_vert),
-                    trailing: Text("プレイ時間：" + data['playTime'] + "h"),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MyGameDetail(
-                              data['title'],
-                              data['category'],
-                              data['imgURL'],
-                              data['playTime'],
-                              data['comment']),
-                        ),
+                  return ListView(
+                    children:
+                        snapshot.data!.docs.map((DocumentSnapshot document) {
+                      Map<String, dynamic> data =
+                          document.data()! as Map<String, dynamic>;
+                      return ListTile(
+                        leading: NetworkImageBuilder(FirebaseStorage.instance
+                            .ref(data['imgURL'])
+                            .getDownloadURL()),
+                        title: Text(data['title']),
+                        // subtitle: Text(data['category']),
+                        subtitle: Text("コメント：" + data['comment']),
+                        // trailing: Icon(Icons.more_vert),
+                        trailing:
+                            Text("プレイ時間：" + data['playTime'].toString() + "h"),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MyGameDetail(
+                                  data['title'],
+                                  data['category'],
+                                  data['imgURL'],
+                                  data['playTime'],
+                                  data['comment']),
+                            ),
+                          );
+                        },
                       );
-                    },
+                    }).toList(),
                   );
-                }).toList(),
-              );
-            })));
+                })));
   } // children:
 } // listTiles

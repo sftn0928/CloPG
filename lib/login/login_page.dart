@@ -31,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       TextField(
                         controller: model.titleController,
-                        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                        // inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                         decoration: InputDecoration(
                           hintText: 'Email',
                         ),
@@ -49,7 +49,9 @@ class _LoginPageState extends State<LoginPage> {
                           hintText: 'password',
                           suffixIcon: IconButton(
                             // 文字の表示・非表示でアイコンを変える
-                            icon: Icon(_isObscure ? Icons.visibility_off : Icons.visibility),
+                            icon: Icon(_isObscure
+                                ? Icons.visibility_off
+                                : Icons.visibility),
                             // アイコンがタップされたら現在と反対の状態をセットする
                             onPressed: () {
                               setState(() {

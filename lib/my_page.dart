@@ -18,41 +18,43 @@ class _MyPageState extends State<MyPage> {
         elevation: 10,
       ),
       body: Card(
-        child: Column(
-          children: [
-            _myPageImage(),
-            _myProfileText(),
-            _gamePlayListValue(),
-            _gamePlayTimeValue(),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              _myPageImage(),
+              _myProfileText(),
+              _gamePlayListValue(),
+              _gamePlayTimeValue(),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget _myPageImage(){
+  Widget _myPageImage() {
     return Container(
       margin: EdgeInsets.all(30),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              width: 150,
-              height: 150,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle, // Containerを丸くする
-                image: DecorationImage(
-                  fit: BoxFit.fill, // 親Widget(今回はContainer)と同じサイズになるように調整する
-                  image: NetworkImage(url),
-                ),
+        children: <Widget>[
+          Container(
+            width: 150,
+            height: 150,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle, // Containerを丸くする
+              image: DecorationImage(
+                fit: BoxFit.fill, // 親Widget(今回はContainer)と同じサイズになるように調整する
+                image: NetworkImage(url),
               ),
-            )
-          ],
+            ),
+          )
+        ],
       ),
     );
   }
 
-  Widget _myProfileText(){
+  Widget _myProfileText() {
     return Container(
       child: Column(
         children: <Widget>[
@@ -75,63 +77,61 @@ class _MyPageState extends State<MyPage> {
     );
   }
 
-  Widget _gamePlayListValue(){
+  Widget _gamePlayListValue() {
     return Container(
       margin: EdgeInsets.all(50),
       child: Row(
         children: <Widget>[
           Expanded(
               child: Column(
-                children: [
-                  new Icon(
-                      Icons.assignment_outlined,
-                      size: 50,
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 20),
-                    child: Text(
-                      '総ゲーム数',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                  ),
-                  Container(
-                    child: Text(
-                      '9',
-                      style: TextStyle(fontSize: 25),
-                    ),
-                  )
-                ],
+            children: [
+              new Icon(
+                Icons.assignment_outlined,
+                size: 50,
+              ),
+              Container(
+                margin: const EdgeInsets.only(bottom: 20),
+                child: Text(
+                  '総ゲーム数',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+              Container(
+                child: Text(
+                  '9',
+                  style: TextStyle(fontSize: 25),
+                ),
               )
-          ),
+            ],
+          )),
           Expanded(
               child: Column(
-                children: [
-                  new Icon(
-                      Icons.star,
-                      size: 50,
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 20),
-                    child: Text(
-                      'プレイ済み',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                  ),
-                  Container(
-                    child: Text(
-                      '5',
-                      style: TextStyle(fontSize: 25),
-                    ),
-                  )
-                ],
+            children: [
+              new Icon(
+                Icons.star,
+                size: 50,
+              ),
+              Container(
+                margin: const EdgeInsets.only(bottom: 20),
+                child: Text(
+                  'プレイ済み',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+              Container(
+                child: Text(
+                  '5',
+                  style: TextStyle(fontSize: 25),
+                ),
               )
-          )
+            ],
+          ))
         ],
       ),
     );
   }
 
-  Widget _gamePlayTimeValue(){
+  Widget _gamePlayTimeValue() {
     return Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
