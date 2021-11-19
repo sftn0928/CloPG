@@ -28,7 +28,15 @@ class NetworkImageBuilder extends FutureBuilder {
   final Future<String> item;
 }
 
-class GameList extends StatelessWidget {
+class GameList extends StatefulWidget {
+  @override
+  _GameList createState() => _GameList();
+}
+
+class _GameList extends State<GameList> {
+  void _handleCheckbox(bool? e){
+  }
+
   final Stream<QuerySnapshot> _stream =
       FirebaseFirestore.instance.collection('game_img').snapshots();
   @override
@@ -36,6 +44,8 @@ class GameList extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text('Game List'),
+          centerTitle: true,
+          elevation: 10,
         ),
         body: StreamBuilder<QuerySnapshot>(
             stream: _stream,
@@ -54,14 +64,13 @@ class GameList extends StatelessWidget {
                         .getDownloadURL()),
                     title: Text(data['title']),
                     subtitle: Text(data['category']),
-                    trailing: Icon(Icons.more_vert),
-                    //   trailing: new Checkbox(
-                    //   activeColor: Colors.blue,
-                    //   value: _check,
-                    //   onChanged: _handleCheckbox,
-                    // ),
+                    trailing: new Checkbox(
+                      activeColor: Colors.blue,
+                      value: (data['check']),
+                      onChanged: _handleCheckbox,
+                    ),
                     onTap: () {
-                      Navigator.push(
+                      if(!(data['check']))Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => GameDetail(

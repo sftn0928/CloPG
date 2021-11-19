@@ -2,7 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_clopg/register/register_model.dart';
 import 'package:provider/provider.dart';
 
-class RegisterPage extends StatelessWidget {
+import '../app.dart';
+
+class RegisterPage extends StatefulWidget {
+@override
+_RegisterPageState createState() => _RegisterPageState();
+
+}
+
+class _RegisterPageState extends State<RegisterPage> {
+bool _isObscure = true;
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<RegisterModel>(
@@ -33,8 +42,19 @@ class RegisterPage extends StatelessWidget {
                       ),
                       TextField(
                         controller: model.authorController,
+                        obscureText: _isObscure,
                         decoration: InputDecoration(
-                          hintText: 'パスワード',
+                          hintText: 'password',
+                          suffixIcon: IconButton(
+                            // 文字の表示・非表示でアイコンを変える
+                            icon: Icon(_isObscure ? Icons.visibility_off : Icons.visibility),
+                            // アイコンがタップされたら現在と反対の状態をセットする
+                            onPressed: () {
+                              setState(() {
+                                _isObscure = !_isObscure;
+                              });
+                            },
+                          ),
                         ),
                         onChanged: (text) {
                           model.setPassword(text);
@@ -50,7 +70,14 @@ class RegisterPage extends StatelessWidget {
                           // 追加の処理
                           try {
                             await model.signUp();
-                            Navigator.of(context).pop();
+                            // Navigator.of(context).pop();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => App(),
+                                fullscreenDialog: true,
+                              ),
+                            );
                           } catch (e) {
                             final snackBar = SnackBar(
                               backgroundColor: Colors.red,

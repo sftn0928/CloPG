@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_clopg/register/register_page.dart';
 import 'package:provider/provider.dart';
+import '../app.dart';
 import '../game_list.dart';
 import 'login_model.dart';
 import '../my_page.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  bool _isObscure = true;
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<LoginModel>(
       create: (_) => LoginModel(),
@@ -24,6 +31,7 @@ class LoginPage extends StatelessWidget {
                     children: [
                       TextField(
                         controller: model.titleController,
+                        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                         decoration: InputDecoration(
                           hintText: 'Email',
                         ),
@@ -36,8 +44,19 @@ class LoginPage extends StatelessWidget {
                       ),
                       TextField(
                         controller: model.authorController,
+                        obscureText: _isObscure,
                         decoration: InputDecoration(
-                          hintText: 'パスワード',
+                          hintText: 'password',
+                          suffixIcon: IconButton(
+                            // 文字の表示・非表示でアイコンを変える
+                            icon: Icon(_isObscure ? Icons.visibility_off : Icons.visibility),
+                            // アイコンがタップされたら現在と反対の状態をセットする
+                            onPressed: () {
+                              setState(() {
+                                _isObscure = !_isObscure;
+                              });
+                            },
+                          ),
                         ),
                         onChanged: (text) {
                           model.setPassword(text);
@@ -49,7 +68,6 @@ class LoginPage extends StatelessWidget {
                       ElevatedButton(
                         onPressed: () async {
                           model.startLoading();
-
                           // 追加の処理
                           try {
                             await model.login();
@@ -57,8 +75,7 @@ class LoginPage extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                // builder: (context) => MyPage(),
-                                builder: (context) => GameList(),
+                                builder: (context) => App(),
                                 fullscreenDialog: true,
                               ),
                             );
@@ -75,7 +92,7 @@ class LoginPage extends StatelessWidget {
                         },
                         child: Text('ログイン'),
                       ),
-                      TextButton(
+                      ElevatedButton(
                         onPressed: () async {
                           // 画面遷移
                           await Navigator.push(
