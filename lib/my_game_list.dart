@@ -121,7 +121,8 @@ class MyGameList extends StatelessWidget {
                         // subtitle: Text(data['category']),
                         subtitle: Text("コメント：" + data['comment']),
                         // trailing: Icon(Icons.more_vert),
-                        trailing: Text("プレイ時間：" + data['playTime'] + "h"),
+                        trailing:
+                            Text("プレイ時間：" + data['playTime'].toString() + "h"),
                         onTap: () {
                           Navigator.push(
                             context,
