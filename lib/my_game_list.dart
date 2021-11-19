@@ -1,11 +1,13 @@
 import 'dart:ui' as ui;
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:share_extend/share_extend.dart';
 
 import 'my_game_detail.dart';
 // ゲーム一覧画面（自分の）
