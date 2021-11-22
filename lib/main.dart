@@ -6,7 +6,7 @@ import 'game_detail.dart';
 import 'game_list.dart';
 import 'my_page.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
@@ -31,11 +31,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: materialWhite,
         visualDensity: VisualDensity.adaptivePlatformDensity,
-        pageTransitionsTheme: const PageTransitionsTheme( //ここを追加
+        pageTransitionsTheme: const PageTransitionsTheme(
+          //ここを追加
           builders: <TargetPlatform, PageTransitionsBuilder>{
             TargetPlatform.android: CupertinoPageTransitionsBuilder(),
             TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
@@ -44,6 +46,7 @@ class MyApp extends StatelessWidget {
       ),
       // 各ファイルの名前を入力して実行すればそのページが表示される
       home: App(),
+      // home: LoginPage(),
     );
   }
 }

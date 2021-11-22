@@ -6,25 +6,14 @@ import 'game_list.dart';
 
 // ゲーム詳細画面
 class GameDetail extends StatelessWidget {
-  // bool _check = false;
   final String title;
   final String category;
   final String imgURL;
-  // final String playTime;
-  // final String comment;
 
-  // GameDetail(this.title, this.category, this.imgURL, this.playTime, this.comment);
   GameDetail(this.title, this.category, this.imgURL);
 
   var _playTime = TextEditingController();
   var _comment = TextEditingController();
-  // var _inputTextController = TextEditingController();
-
-  // void _handleCheckbox(bool? e){
-  //   //   setState(() {
-  //   //     _check = e!;
-  //   //   });
-  //   // }
 
   Future AddUser() async {
     if (_playTime.text == null || _playTime.text == "") {
@@ -36,12 +25,17 @@ class GameDetail extends StatelessWidget {
     }
 
     // firestoreに追加
-    await FirebaseFirestore.instance.collection('user_game').add({
+
+    await FirebaseFirestore.instance.collection('user_game').doc(title).set({
       'title': title,
       'category': category,
       'imgURL': imgURL,
-      'playTime': _playTime.text,
+      'playTime': int.parse(_playTime.text),
       'comment': _comment.text,
+    });
+
+    await FirebaseFirestore.instance.collection('game_img').doc(title).update({
+      'check': true,
     });
   }
 
@@ -61,14 +55,11 @@ class GameDetail extends StatelessWidget {
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                // 作業フォルダにimagesフォルダを作成し、その中にsample.jpgという名前の画像を入れて表示
-                // Image.asset('images/sample.jpg'),
                 NetworkImageBuilder(
                     FirebaseStorage.instance.ref(imgURL).getDownloadURL()),
                 _titleArea(),
                 _playCountInputArea(),
                 _detailInputArea(),
-                // _valueArea(),
                 _determineArea(context)
               ]),
         ),
@@ -90,7 +81,7 @@ class GameDetail extends StatelessWidget {
                     child: Text(
                       title,
                       style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
+                      TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
                     ),
                   ),
                   Container(
@@ -113,26 +104,24 @@ class GameDetail extends StatelessWidget {
         children: <Widget>[
           Expanded(
               child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                // margin: const EdgeInsets.only(bottom: 0),
-                child: Text(
-                  "プレイ時間（○○時間）",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                ),
-              ),
-              TextField(
-                keyboardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                decoration: InputDecoration(
-                  // border: OutlineInputBorder(),
-                  hintText: '例）100',
-                ),
-                controller: _playTime,
-              ),
-            ],
-          )),
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    child: Text(
+                      "プレイ時間（○○時間）",
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                  ),
+                  TextField(
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    decoration: InputDecoration(
+                      hintText: '例）100',
+                    ),
+                    controller: _playTime,
+                  ),
+                ],
+              )),
         ],
       ),
     );
@@ -148,7 +137,6 @@ class GameDetail extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    // margin: const EdgeInsets.only(bottom: 0),
                     child: Text(
                       "コメント",
                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
@@ -156,22 +144,16 @@ class GameDetail extends StatelessWidget {
                   ),
                   TextField(
                     decoration: InputDecoration(
-                      // border: OutlineInputBorder(),
                       hintText: '例）めっちゃおもしろい！！',
                     ),
                     controller: _comment,
                   )
                 ],
-              )
-          ),
+              )),
         ],
       ),
     );
   }
-
-  // Widget _valueArea(){
-  //
-  // }
 
   Widget _determineArea(context) {
     return Container(
@@ -180,7 +162,7 @@ class GameDetail extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            //Container(),
+            Container(),
             ElevatedButton(
                 onPressed: () async {
                   // 追加の処理

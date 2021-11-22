@@ -24,36 +24,21 @@ class NetworkImageBuilder extends FutureBuilder {
   final Future<String> item;
 }
 
-class MyHomePage extends StatefulWidget {
-  // final String username;
-  // final String usercomment;
-  // final String userimg;
-  // final Stream<QuerySnapshot> _userstream =FirebaseFirestore.instance.collection('users').snapshots();
-  // MyHomePage(this.username,this.usercomment,this.userimg);
-  
+class MyPage extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _MyPageState createState() => _MyPageState();
 }
-class _MyHomePageState extends State<MyHomePage> {
 
+
+class _MyPageState extends State<MyPage> {
   final url = "https://ironodata.info/imghex2/0000FF.png";
+
   Future GetUserinfo() async{
     DocumentSnapshot snapshot = await FirebaseFirestore.instance.collection('users').doc('gn9O7UyS3wRsVM0WdHpVG6pA7Yh2').get();
-    // Map<String,dynamic>? username = user.data() as Map<String,dynamic>;
-    // return username['username'];
+// Map<String,dynamic>? username = user.data() as Map<String,dynamic>;
+// return username['username'];
     return snapshot.data();
   }
-
-  // Future GetUserimg() async{
-  //   DocumentSnapshot snapshot = await FirebaseFirestore.instance.collection('users').doc('gn9O7UyS3wRsVM0WdHpVG6pA7Yh2').get();
-  //   return snapshot.data() as Map<String,dynamic>;
-  // }
-
-  // Future<void> downloadURLExample() async {
-  //   String downloadURL = await firebase_storage.FirebaseStorage.instance
-  //       .ref('users/123/avatar.jpg')
-  //       .getDownloadURL();
-  // }
 
 
   @override
@@ -78,6 +63,19 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
+
+
+  // Future GetUserimg() async{
+  //   DocumentSnapshot snapshot = await FirebaseFirestore.instance.collection('users').doc('gn9O7UyS3wRsVM0WdHpVG6pA7Yh2').get();
+  //   return snapshot.data() as Map<String,dynamic>;
+  // }
+
+  // Future<void> downloadURLExample() async {
+  //   String downloadURL = await firebase_storage.FirebaseStorage.instance
+  //       .ref('users/123/avatar.jpg')
+  //       .getDownloadURL();
+  // }
+  @override
 
   Widget _myPageImage() {
     return Container(
@@ -129,7 +127,7 @@ class _MyHomePageState extends State<MyHomePage> {
   //   );
   // }
 
-  Widget _myProfileText(){
+  Widget _myProfileText() {
     return Container(
       child: Column(
         children: <Widget>[
@@ -164,63 +162,61 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget _gamePlayListValue(){
+  Widget _gamePlayListValue() {
     return Container(
       margin: EdgeInsets.all(50),
       child: Row(
         children: <Widget>[
           Expanded(
               child: Column(
-                children: [
-                  new Icon(
-                      Icons.assignment_outlined,
-                      size: 50,
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 20),
-                    child: Text(
-                      '総ゲーム数',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                  ),
-                  Container(
-                    child: Text(
-                      '9',
-                      style: TextStyle(fontSize: 25),
-                    ),
-                  )
-                ],
+            children: [
+              new Icon(
+                Icons.assignment_outlined,
+                size: 50,
+              ),
+              Container(
+                margin: const EdgeInsets.only(bottom: 20),
+                child: Text(
+                  '総ゲーム数',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+              Container(
+                child: Text(
+                  '9',
+                  style: TextStyle(fontSize: 25),
+                ),
               )
-          ),
+            ],
+          )),
           Expanded(
               child: Column(
-                children: [
-                  new Icon(
-                      Icons.star,
-                      size: 50,
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 20),
-                    child: Text(
-                      'プレイ済み',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                  ),
-                  Container(
-                    child: Text(
-                      '5',
-                      style: TextStyle(fontSize: 25),
-                    ),
-                  )
-                ],
+            children: [
+              new Icon(
+                Icons.star,
+                size: 50,
+              ),
+              Container(
+                margin: const EdgeInsets.only(bottom: 20),
+                child: Text(
+                  'プレイ済み',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+              Container(
+                child: Text(
+                  '5',
+                  style: TextStyle(fontSize: 25),
+                ),
               )
-          )
+            ],
+          ))
         ],
       ),
     );
   }
 
-  Widget _gamePlayTimeValue(){
+  Widget _gamePlayTimeValue() {
     return Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

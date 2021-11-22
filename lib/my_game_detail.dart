@@ -9,7 +9,7 @@ class MyGameDetail extends StatelessWidget {
   final String title;
   final String category;
   final String imgURL;
-  final String playTime;
+  final int playTime;
   final String comment;
 
   MyGameDetail(
@@ -18,28 +18,35 @@ class MyGameDetail extends StatelessWidget {
   var _playTime = TextEditingController();
   var _comment = TextEditingController();
 
-  // // データの更新
-  // Future UpdateUser() async {
-  //   if (_playTime.text == null || _playTime.text == "") {
-  //     throw 'プレイ時間が入力されていません';
-  //   }
-  //
-  //   if (_comment.text == null || _comment.text == "") {
-  //     throw 'コメントが入力されていません';
-  //   }
-  //   await FirebaseFirestore.instance.collection('user_game').doc(docRef).update({
-  //     'title': title,
-  //     'category': category,
-  //     'imgURL': imgURL,
-  //     'playTime': _playTime.text,
-  //     'comment': _comment.text,
-  //   });
-  // }
+  // データの更新
+  Future UpdateUser() async {
+    if (_playTime.text == null || _playTime.text == "") {
+      throw 'プレイ時間が入力されていません';
+    }
 
-  // // データの削除
-  // Future DeleteUser() async {
-  //   await FirebaseFirestore.instance.collection('user_game').doc(.id).delete();
-  // }
+    if (_comment.text == null || _comment.text == "") {
+      throw 'コメントが入力されていません';
+    }
+    // String t = getDocId(title,'user_game') as String;
+    await FirebaseFirestore.instance.collection('user_game').doc(title).update({
+      'title': title,
+      'category': category,
+      'imgURL': imgURL,
+      'playTime': int.parse(_playTime.text),
+      'comment': _comment.text,
+    });
+  }
+
+  // データの削除
+  Future DeleteUser() async {
+    await FirebaseFirestore.instance
+        .collection('user_game')
+        .doc(title)
+        .delete();
+    await FirebaseFirestore.instance.collection('game_img').doc(title).update({
+      'check': false,
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +91,7 @@ class MyGameDetail extends StatelessWidget {
                     child: Text(
                       title,
                       style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
+                      TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
                     ),
                   ),
                   Container(
@@ -107,24 +114,24 @@ class MyGameDetail extends StatelessWidget {
         children: <Widget>[
           Expanded(
               child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                child: Text(
-                  "プレイ時間（○○時間）",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                ),
-              ),
-              TextField(
-                keyboardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                decoration: InputDecoration(
-                  hintText: playTime,
-                ),
-                controller: _playTime,
-              ),
-            ],
-          )),
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    child: Text(
+                      "プレイ時間（○○時間）",
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                  ),
+                  TextField(
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    decoration: InputDecoration(
+                      hintText: playTime.toString(),
+                    ),
+                    controller: _playTime,
+                  ),
+                ],
+              )),
         ],
       ),
     );
@@ -137,46 +144,41 @@ class MyGameDetail extends StatelessWidget {
         children: [
           Expanded(
               child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                // margin: const EdgeInsets.only(bottom: 0),
-                child: Text(
-                  "メモ",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                ),
-              ),
-              TextField(
-                decoration: InputDecoration(
-                  hintText: comment,
-                ),
-                controller: _comment,
-              )
-            ],
-          )),
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    // margin: const EdgeInsets.only(bottom: 0),
+                    child: Text(
+                      "メモ",
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                  ),
+                  TextField(
+                    decoration: InputDecoration(
+                      hintText: comment,
+                    ),
+                    controller: _comment,
+                  )
+                ],
+              )),
         ],
       ),
     );
   }
 
-  // Widget _valueArea(){
-  //
-  // }
-
   Widget _determineArea(context) {
     return Container(
       margin: EdgeInsets.all(16),
       child: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(),
             ElevatedButton(
-                child: Text("変更確定"),
                 onPressed: () async {
                   // 追加の処理
                   try {
-                    // await UpdateUser();
+                    await UpdateUser();
                     Navigator.pop(context);
                   } catch (e) {
                     final snackBar = SnackBar(
@@ -186,13 +188,12 @@ class MyGameDetail extends StatelessWidget {
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
                 },
-            ),
+                child: Text("変更確定")),
             ElevatedButton(
-                child: Text("削除"),
                 onPressed: () async {
                   // 追加の処理
                   try {
-                    // await DeleteUser();
+                    await DeleteUser();
                     Navigator.pop(context);
                   } catch (e) {
                     final snackBar = SnackBar(
@@ -202,7 +203,11 @@ class MyGameDetail extends StatelessWidget {
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
                 },
-            )
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.red,
+                  onPrimary: Colors.black,
+                ),
+                child: Text("削除"))
           ],
         ),
       ),
