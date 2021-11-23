@@ -81,7 +81,7 @@ class GameDetail extends StatelessWidget {
                     child: Text(
                       title,
                       style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
+                      TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
                     ),
                   ),
                   Container(
@@ -104,24 +104,24 @@ class GameDetail extends StatelessWidget {
         children: <Widget>[
           Expanded(
               child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                child: Text(
-                  "プレイ時間（○○時間）",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                ),
-              ),
-              TextField(
-                keyboardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                decoration: InputDecoration(
-                  hintText: '例）100',
-                ),
-                controller: _playTime,
-              ),
-            ],
-          )),
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    child: Text(
+                      "プレイ時間（○○時間）",
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                  ),
+                  TextField(
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    decoration: InputDecoration(
+                      hintText: '例）100',
+                    ),
+                    controller: _playTime,
+                  ),
+                ],
+              )),
         ],
       ),
     );
@@ -134,22 +134,22 @@ class GameDetail extends StatelessWidget {
         children: [
           Expanded(
               child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                child: Text(
-                  "コメント",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                ),
-              ),
-              TextField(
-                decoration: InputDecoration(
-                  hintText: '例）めっちゃおもしろい！！',
-                ),
-                controller: _comment,
-              )
-            ],
-          )),
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    child: Text(
+                      "コメント",
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                  ),
+                  TextField(
+                    decoration: InputDecoration(
+                      hintText: '例）めっちゃおもしろい！！',
+                    ),
+                    controller: _comment,
+                  )
+                ],
+              )),
         ],
       ),
     );

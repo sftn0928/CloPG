@@ -91,7 +91,7 @@ class MyGameDetail extends StatelessWidget {
                     child: Text(
                       title,
                       style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
+                      TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
                     ),
                   ),
                   Container(
@@ -114,24 +114,24 @@ class MyGameDetail extends StatelessWidget {
         children: <Widget>[
           Expanded(
               child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                child: Text(
-                  "プレイ時間（○○時間）",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                ),
-              ),
-              TextField(
-                keyboardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                decoration: InputDecoration(
-                  hintText: playTime.toString(),
-                ),
-                controller: _playTime,
-              ),
-            ],
-          )),
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    child: Text(
+                      "プレイ時間（○○時間）",
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                  ),
+                  TextField(
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    decoration: InputDecoration(
+                      hintText: playTime.toString(),
+                    ),
+                    controller: _playTime,
+                  ),
+                ],
+              )),
         ],
       ),
     );
@@ -144,23 +144,23 @@ class MyGameDetail extends StatelessWidget {
         children: [
           Expanded(
               child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                // margin: const EdgeInsets.only(bottom: 0),
-                child: Text(
-                  "メモ",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                ),
-              ),
-              TextField(
-                decoration: InputDecoration(
-                  hintText: comment,
-                ),
-                controller: _comment,
-              )
-            ],
-          )),
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    // margin: const EdgeInsets.only(bottom: 0),
+                    child: Text(
+                      "メモ",
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                  ),
+                  TextField(
+                    decoration: InputDecoration(
+                      hintText: comment,
+                    ),
+                    controller: _comment,
+                  )
+                ],
+              )),
         ],
       ),
     );

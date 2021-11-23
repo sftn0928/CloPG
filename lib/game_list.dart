@@ -2,9 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-
 import 'game_detail.dart';
-
 // ゲーム一覧画面
 
 //Storageに保存した画像のURLを取得する際のコード
@@ -28,15 +26,7 @@ class NetworkImageBuilder extends FutureBuilder {
   final Future<String> item;
 }
 
-class GameList extends StatefulWidget {
-  @override
-  _GameList createState() => _GameList();
-}
-
-class _GameList extends State<GameList> {
-  void _handleCheckbox(bool? e){
-  }
-
+class GameList extends StatelessWidget {
   final Stream<QuerySnapshot> _stream =
       FirebaseFirestore.instance.collection('game_img').snapshots();
   @override
@@ -44,8 +34,6 @@ class _GameList extends State<GameList> {
     return Scaffold(
         appBar: AppBar(
           title: Text('Game List'),
-          centerTitle: true,
-          elevation: 10,
         ),
         body: StreamBuilder<QuerySnapshot>(
             stream: _stream,
@@ -64,17 +52,18 @@ class _GameList extends State<GameList> {
                         .getDownloadURL()),
                     title: Text(data['title']),
                     subtitle: Text(data['category']),
-                    trailing: new Checkbox(
-                      activeColor: Colors.blue,
-                      value: (data['check']),
-                      onChanged: _handleCheckbox,
-                    ),
+                    trailing: Icon(Icons.more_vert),
+                  //   trailing: new Checkbox(
+                  //   activeColor: Colors.blue,
+                  //   value: _check,
+                  //   onChanged: _handleCheckbox,
+                  // ),
                     onTap: () {
-                      if(!(data['check']))Navigator.push(
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => GameDetail(
-                              data['title'], data['category'], data['imgURL']),
+                          builder: (context) => GameDetail(data['title'], data['category'], data['imgURL']
+                          ),
                         ),
                       );
                     },
