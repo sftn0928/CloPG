@@ -37,7 +37,6 @@ class MyApp extends StatelessWidget {
         primarySwatch: materialWhite,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         pageTransitionsTheme: const PageTransitionsTheme(
-          //ここを追加
           builders: <TargetPlatform, PageTransitionsBuilder>{
             TargetPlatform.android: CupertinoPageTransitionsBuilder(),
             TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
@@ -45,8 +44,8 @@ class MyApp extends StatelessWidget {
         ),
       ),
       // 各ファイルの名前を入力して実行すればそのページが表示される
-      home: App(),
-      // home: LoginPage(),
+      // home: App(),
+      home: LoginPage(),
     );
   }
 }
