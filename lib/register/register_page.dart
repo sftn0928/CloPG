@@ -18,33 +18,85 @@ bool _isObscure = true;
       create: (_) => RegisterModel(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('新規登録'),
+          title: Text('Resister'),
+          centerTitle: true,
+          elevation: 10,
         ),
-        body: Center(
-          child: Consumer<RegisterModel>(builder: (context, model, child) {
-            return Stack(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      TextField(
+        body: Card(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _registerField(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _registerField(){
+    return ChangeNotifierProvider<RegisterModel>(
+      create: (_) => RegisterModel(),
+      child: Consumer<RegisterModel>(builder: (context, model, child){
+        return Container(
+          margin: EdgeInsets.all(30),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                margin: EdgeInsets.only(bottom: 50),
+                child: Text(
+                  'Welcome to CLoPG !',
+                  style: TextStyle(fontSize: 30),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(bottom: 50),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color.fromRGBO(196, 135, 198, .3),
+                        blurRadius: 20,
+                        offset: Offset(0, 10),
+                      )
+                    ]
+                ),
+                child: Column(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                          border: Border(bottom: BorderSide(
+                              color: Colors.grey.shade200
+                          ))
+                      ),
+                      child: TextField(
                         controller: model.titleController,
                         decoration: InputDecoration(
-                          hintText: 'Email',
+                            hintText: 'Email',
+                            hintStyle: TextStyle(color: Colors.grey),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide.none,
+                            )
                         ),
                         onChanged: (text) {
                           model.setEmail(text);
                         },
                       ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      TextField(
+                    ),
+                    Container(
+                      child: TextField(
                         controller: model.authorController,
                         obscureText: _isObscure,
                         decoration: InputDecoration(
-                          hintText: 'password',
+                          hintText: 'Password',
+                          hintStyle: TextStyle(color: Colors.grey),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide.none,
+                          ),
                           suffixIcon: IconButton(
                             // 文字の表示・非表示でアイコンを変える
                             icon: Icon(_isObscure ? Icons.visibility_off : Icons.visibility),
@@ -60,52 +112,53 @@ bool _isObscure = true;
                           model.setPassword(text);
                         },
                       ),
-                      SizedBox(
-                        height: 16,
-                      ),
-                      ElevatedButton(
-                        onPressed: () async {
-                          model.startLoading();
+                    )
+                  ]
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  model.startLoading();
 
-                          // 追加の処理
-                          try {
-                            await model.signUp();
-                            // Navigator.of(context).pop();
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => App(),
-                                fullscreenDialog: true,
-                              ),
-                            );
-                          } catch (e) {
-                            final snackBar = SnackBar(
-                              backgroundColor: Colors.red,
-                              content: Text(e.toString()),
-                            );
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(snackBar);
-                          } finally {
-                            model.endLoading();
-                          }
-                        },
-                        child: Text('登録する'),
+                  // 追加の処理
+                  try {
+                    await model.signUp();
+                    // Navigator.of(context).pop();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => App(),
+                        fullscreenDialog: true,
                       ),
-                    ],
+                    );
+                  } catch (e) {
+                    final snackBar = SnackBar(
+                      backgroundColor: Colors.red,
+                      content: Text(e.toString()),
+                    );
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(snackBar);
+                  } finally {
+                    model.endLoading();
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.blueAccent,
+                  onPrimary: Colors.black,
+                ),
+                child: Text('                     登録する                      '),
+              ),
+              if (model.isLoading)
+                Container(
+                  color: Colors.black54,
+                  child: Center(
+                    child: CircularProgressIndicator(),
                   ),
                 ),
-                if (model.isLoading)
-                  Container(
-                    color: Colors.black54,
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  ),
-              ],
-            );
-          }),
-        ),
-      ),
+            ],
+          ),
+        );
+      }),
     );
   }
 }
