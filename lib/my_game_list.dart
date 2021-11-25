@@ -81,7 +81,7 @@ class MyGameList extends StatelessWidget {
   }
 
   final Stream<QuerySnapshot> _stream =
-      FirebaseFirestore.instance.collection('user_game').snapshots();
+      FirebaseFirestore.instance.collection('user_game').orderBy("category").snapshots();
   @override
   Widget build(BuildContext context) {
     return RepaintBoundary(

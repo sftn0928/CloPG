@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_clopg/my_game_list.dart';
-import 'package:flutter_clopg/my_game_list.dart';
 import 'my_game_list.dart';
 import 'game_list.dart';
 import 'my_page.dart';

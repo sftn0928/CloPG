@@ -23,11 +23,13 @@ bool _isObscure = true;
           elevation: 10,
         ),
         body: Card(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _registerField(),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _registerField(),
+              ],
+            ),
           ),
         ),
       ),
