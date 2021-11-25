@@ -28,7 +28,8 @@ class NetworkImageBuilder extends FutureBuilder {
 
 class GameList extends StatelessWidget {
   final Stream<QuerySnapshot> _stream =
-      FirebaseFirestore.instance.collection('game_img').snapshots();
+      FirebaseFirestore.instance.collection("game_img")
+          .orderBy("category").snapshots();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

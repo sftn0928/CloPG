@@ -1,12 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_clopg/register/register_page.dart';
 import 'package:provider/provider.dart';
 import '../app.dart';
-import '../game_list.dart';
 import 'login_model.dart';
-import '../my_page.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -25,11 +22,13 @@ class _LoginPageState extends State<LoginPage> {
           elevation: 10,
         ),
         body: Card(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _loginField(),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _loginField(),
+                ],
+              ),
             ),
         ),
       ),

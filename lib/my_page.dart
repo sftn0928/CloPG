@@ -31,7 +31,7 @@ class MyPage extends StatefulWidget {
 
 
 class _MyPageState extends State<MyPage> {
-  final url = "https://ironodata.info/imghex2/0000FF.png";
+  final url = "images/sample.png";
 
   Future GetUserinfo() async{
     DocumentSnapshot snapshot = await FirebaseFirestore.instance.collection('users').doc('gn9O7UyS3wRsVM0WdHpVG6pA7Yh2').get();
@@ -75,6 +75,22 @@ class _MyPageState extends State<MyPage> {
   //       .ref('users/123/avatar.jpg')
   //       .getDownloadURL();
   // }
+
+  Future<String> getDocId() async {
+    List docList = [];
+    await FirebaseFirestore.instance.collection('user_game').get().then(
+          (QuerySnapshot querySnapshot) => {
+        querySnapshot.docs.forEach(
+              (doc) {
+            docList.add(doc.id);
+          },
+        ),
+      },
+    );
+    docList.forEach(print);
+    return docList.length.toString();
+  }
+
   @override
 
   Widget _myPageImage() {
@@ -87,13 +103,14 @@ class _MyPageState extends State<MyPage> {
             width: 150,
             height: 150,
             decoration: BoxDecoration(
-              shape: BoxShape.circle, // Containerを丸くする
-              image: DecorationImage(
-                fit: BoxFit.fill, // 親Widget(今回はContainer)と同じサイズになるように調整する
-                image: NetworkImage(url),
-              ),
+              shape: BoxShape.circle,
+                image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image: AssetImage("images/sample2.png")
+
+                )
             ),
-          )
+         )
         ],
       ),
     );
@@ -218,6 +235,7 @@ class _MyPageState extends State<MyPage> {
 
   Widget _gamePlayTimeValue() {
     return Container(
+      margin: const EdgeInsets.only(bottom: 50),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
