@@ -1,0 +1,32 @@
+name: flutter_clopg
+description: A new Flutter project.
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  provider: ^5.0.0
+  firebase_auth: ^3.1.1
+  firebase_core: ^1.6.0
+  cloud_firestore: ^2.4.0
+  cupertino_icons: ^1.0.3
+  english_words: ^4.0.0
+  flutter_launcher_icons: "^0.9.0"
+  firebase_storage: ^10.0.6
+  cached_network_image: ^3.1.0+1
+#  esys_flutter_share: ^0.0.8
+#  share: ^2.0.4
+  share_extend: ^2.0.0
+  path_provider: ^2.0.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+flutter:
+  uses-material-design: true
+  assets:
+    - images/sample.jpg
+    - images/sample2.png
