@@ -8,19 +8,19 @@ class NetworkImageBuilder extends FutureBuilder {
   NetworkImageBuilder(Future<String> item)
       : item = item,
         super(
-        future: item,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return CachedNetworkImage(
-              imageUrl: snapshot.data,
-              placeholder: (context, url) => CircularProgressIndicator(),
-              errorWidget: (context, url, error) => Icon(Icons.error),
-            );
-          } else {
-            return CircularProgressIndicator();
-          }
-        },
-      );
+          future: item,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return CachedNetworkImage(
+                imageUrl: snapshot.data,
+                placeholder: (context, url) => CircularProgressIndicator(),
+                errorWidget: (context, url, error) => Icon(Icons.error),
+              );
+            } else {
+              return CircularProgressIndicator();
+            }
+          },
+        );
   final Future<String> item;
 }
 
@@ -29,17 +29,18 @@ class MyPage extends StatefulWidget {
   _MyPageState createState() => _MyPageState();
 }
 
-
 class _MyPageState extends State<MyPage> {
   final url = "images/sample.png";
 
-  Future GetUserinfo() async{
-    DocumentSnapshot snapshot = await FirebaseFirestore.instance.collection('users').doc('gn9O7UyS3wRsVM0WdHpVG6pA7Yh2').get();
+  Future GetUserinfo() async {
+    DocumentSnapshot snapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc('gn9O7UyS3wRsVM0WdHpVG6pA7Yh2')
+        .get();
 // Map<String,dynamic>? username = user.data() as Map<String,dynamic>;
 // return username['username'];
     return snapshot.data();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +65,6 @@ class _MyPageState extends State<MyPage> {
     );
   }
 
-
   // Future GetUserimg() async{
   //   DocumentSnapshot snapshot = await FirebaseFirestore.instance.collection('users').doc('gn9O7UyS3wRsVM0WdHpVG6pA7Yh2').get();
   //   return snapshot.data() as Map<String,dynamic>;
@@ -80,19 +80,18 @@ class _MyPageState extends State<MyPage> {
     List docList = [];
     await FirebaseFirestore.instance.collection('user_game').get().then(
           (QuerySnapshot querySnapshot) => {
-        querySnapshot.docs.forEach(
+            querySnapshot.docs.forEach(
               (doc) {
-            docList.add(doc.id);
+                docList.add(doc.id);
+              },
+            ),
           },
-        ),
-      },
-    );
+        );
     docList.forEach(print);
     return docList.length.toString();
   }
 
   @override
-
   Widget _myPageImage() {
     return Container(
       margin: EdgeInsets.all(30),
@@ -103,19 +102,14 @@ class _MyPageState extends State<MyPage> {
             width: 150,
             height: 150,
             decoration: BoxDecoration(
-              shape: BoxShape.circle,
+                shape: BoxShape.circle,
                 image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image: AssetImage("images/sample2.png")
-
-                )
-            ),
-         )
+                    fit: BoxFit.fill, image: AssetImage("images/sample2.png"))),
+          )
         ],
       ),
     );
   }
-
 
   // Widget _myPageImage(){
   //   return Container(
@@ -151,28 +145,30 @@ class _MyPageState extends State<MyPage> {
           Container(
             margin: const EdgeInsets.only(bottom: 20),
             child: FutureBuilder<dynamic>(
-              future: GetUserinfo(),
-              builder: (context,snapshot) {
-                return Text(
-                  snapshot.hasData ? '${snapshot.data['username']}' : 'No Name',
-                  //'None',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
-                );
-              }
-            ),
+                future: GetUserinfo(),
+                builder: (context, snapshot) {
+                  return Text(
+                    snapshot.hasData
+                        ? '${snapshot.data['username']}'
+                        : 'No Name',
+                    //'None',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
+                  );
+                }),
           ),
           Container(
             margin: const EdgeInsets.only(bottom: 4),
             child: FutureBuilder<dynamic>(
                 future: GetUserinfo(),
-              builder: (context,snapshot) {
-                return Text(
-                  snapshot.hasData ? '${snapshot.data['usercomment']}' : 'No Comment',
-                  //'夏までに目指せ達成率100%!',
-                  style: TextStyle(fontSize: 18),
-                );
-              }
-            ),
+                builder: (context, snapshot) {
+                  return Text(
+                    snapshot.hasData
+                        ? '${snapshot.data['usercomment']}'
+                        : 'No Comment',
+                    //'夏までに目指せ達成率100%!',
+                    style: TextStyle(fontSize: 18),
+                  );
+                }),
           )
         ],
       ),
@@ -200,7 +196,7 @@ class _MyPageState extends State<MyPage> {
               ),
               Container(
                 child: Text(
-                  '9',
+                  '16',
                   style: TextStyle(fontSize: 25),
                 ),
               )
@@ -248,7 +244,7 @@ class _MyPageState extends State<MyPage> {
           ),
           Container(
             child: Text(
-              '1000',
+              '1285',
               style: TextStyle(fontSize: 25),
             ),
           )

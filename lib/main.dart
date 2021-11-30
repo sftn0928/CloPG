@@ -44,8 +44,8 @@ class MyApp extends StatelessWidget {
         ),
       ),
       // 各ファイルの名前を入力して実行すればそのページが表示される
-      home: App(),
-      //home: LoginPage(),
+      // home: App(),
+      home: LoginPage(),
     );
   }
 }
